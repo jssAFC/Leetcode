@@ -12,16 +12,18 @@ class Solution {
     }
 
 
-    void solve(int i,int n,List<String> res,String str){
+    void solve(int open,int close,int n,List<String> res,String str){
         if(str.length()==2*n){
             if(checkValid(str)){
                 res.add(str);
             }
             return;
         }
-
-        solve(i+1,n,res,str+"(");
-        solve(i+1,n,res,str+")");
+        
+        if(open<n)
+        solve(open+1,close,n,res,str+"(");
+        if(close<=open)
+        solve(open,close+1,n,res,str+")");
     }
 
 
@@ -29,7 +31,7 @@ class Solution {
         List<String> res=new ArrayList<>();
         String str="";
 
-        solve(0,n,res,str);
+        solve(0,0,n,res,str);
 
         return res;
     }
