@@ -1,44 +1,73 @@
 class Solution {
+    int n;
+    int[][] t;
+
+    int first(int[][] fruits) {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += fruits[i][i];
+            t[i][i] = 0;
+        }
+
+        return sum;
+    }
+
+    public int second(int i, int j, int fruits[][]) {
+
+        if (i < 0 || j < 0 || i >= n || j >= n)
+            return 0;
+
+        if (i == n - 1 && j == n - 1)
+            return 0;
+
+        if (i >= j)
+            return 0;
+        if (t[i][j] != -1)
+            return t[i][j];
+
+
+        int bottomLeft = fruits[i][j] + second(i + 1, j - 1, fruits);
+        int down = fruits[i][j] + second(i + 1, j, fruits);
+        int bottomRight = fruits[i][j] + second(i + 1, j + 1, fruits);
+
+        return t[i][j] = Math.max(down, Math.max(bottomLeft, bottomRight));
+    }
+
+    public int third(int i, int j, int fruits[][]) {
+
+        if (i < 0 || j < 0 || i >= n || j >= n)
+            return 0;
+
+        if (i == n - 1 && j == n - 1)
+            return 0;
+
+        if (i <= j)
+            return 0;
+        if (t[i][j] != -1)
+            return t[i][j];
+
+
+        int topRight = fruits[i][j] + third(i - 1, j + 1, fruits);
+        int right = fruits[i][j] + third(i, j + 1, fruits);
+        int bottomRight = fruits[i][j] + third(i + 1, j + 1, fruits);
+
+        return t[i][j] = Math.max(right, Math.max(topRight, bottomRight));
+    }
+
     public int maxCollectedFruits(int[][] fruits) {
-        int n = fruits.length;
-        int[][] t = new int[n][n];
 
-        // child1Collect - Diagonal elements
-        int result = 0;
-        for (int i = 0; i < n; i++) {
-            result += fruits[i][i];
-        }
+        n = fruits.length;
+        t = new int[n][n];
 
-        // nullifying the cells child2 and child3 cannot visit     
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i + j < n - 1)
-                    t[i][j] = 0;
-                else
-                    t[i][j] = fruits[i][j];
-            }
-        }
+        for (int[] row : t)
+            Arrays.fill(row, -1);
 
-        // child2 collect fruits
+        int child1 = first(fruits);
 
-        for (int i = 1; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                t[i][j] += Math.max(t[i - 1][j - 1], Math.max(t[i - 1][j], (j + 1 < n) ? t[i - 1][j + 1] : 0));
-            }
-        }
+        int child2 = second(0, n - 1, fruits);
 
-        // child3 collexts
+        int child3 = third(n - 1, 0, fruits);
 
-        for (int j = 1; j < n; j++) {
-            for (int i = j + 1; i < n; i++) {
-                t[i][j] += Math.max(t[i - 1][j - 1], Math.max(t[i][j - 1], (i + 1 < n) ? t[i + 1][j - 1] : 0));
-            }
-        }
-
-        System.out.println(t[n - 1][n - 2]);
-        System.out.println(t[n - 2][n - 1]);
-
-        
-        return result + t[n - 2][n - 1] + t[n - 1][n - 2];
+        return child1 + child2 + child3;
     }
 }
