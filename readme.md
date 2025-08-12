@@ -1,1 +1,1 @@
-This repo contains all the list of leetocde quesiton i have solved during my DSA journey
+A list of my Leetcode Questions
