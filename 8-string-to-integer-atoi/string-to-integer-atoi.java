@@ -1,4 +1,22 @@
 class Solution {
+    private long result=0;
+    boolean flag=false;
+
+    public void solve(int i,String s,int n){
+        if(i>=n || s.charAt(i)<'0' || s.charAt(i)>'9') return;
+        int digit=s.charAt(i)-'0';
+
+        if((Integer.MAX_VALUE / 10 < result || Integer.MAX_VALUE / 10 == result && Integer.MAX_VALUE % 10 < digit)){
+            flag=true;
+            return;
+        }
+        result=result*10+digit;
+
+        System.out.println(result);
+
+        solve(i+1,s,n);
+
+    }
     public int myAtoi(String s) {
         int i = 0, n = s.length();
         // if(n==0) return 0;
@@ -15,20 +33,12 @@ class Solution {
             i++;
         }
 
-        while (i < n) {
-            char ch = s.charAt(i);
-            int digit = ch - '0';
-            if (ch < '0' || ch > '9')
-                break;
-            if (Integer.MAX_VALUE / 10 < num || Integer.MAX_VALUE / 10 == num && Integer.MAX_VALUE % 10 < digit) {
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            }
-            num = num * 10 + digit;
+        solve(i,s,n);
 
-            i++;
+        if(flag==true){
+            return sign==1?Integer.MAX_VALUE:Integer.MIN_VALUE;
         }
-
-        return sign * num;
+        return sign * (int)result;
 
     }
 }
