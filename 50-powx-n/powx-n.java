@@ -1,22 +1,18 @@
 class Solution {
+    public double calc(double x, long pow){
+        if(pow==0) return 1;
+
+        double res= calc(x,pow/2);
+
+        if(pow%2==0) return res*res;
+        return res*res*x;
+
+    }
     public double myPow(double x, int n) {
-        double res=1;
-        long pow= n;
-
-        if(pow<0) pow=-pow;
-        
         if(n==0 || x==1) return 1;
-        if(x==-1) return n%2==0?1:-1;
-        while(pow>0){
-            if((pow & 1)==1){
-                res=res*x;
-            }
+        long pow=n;
+        if(n<0) pow=-pow;
+        return n>0? calc(x,pow):1/calc(x,pow);
 
-            x=x*x;
-            pow>>=1;
-        }
-
-        return n>0?res:1.0/res;
-        // return res;
     }
 }
