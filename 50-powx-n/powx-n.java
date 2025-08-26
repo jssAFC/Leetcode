@@ -1,28 +1,22 @@
 class Solution {
+    public double myPow(double x, int n) {
+        double res=1;
+        long pow= n;
 
-    public double solve(double x, int n) {
-        if (n == 0)
-            return 1.0;
+        if(pow<0) pow=-pow;
+        
+        if(n==0 || x==1) return 1;
+        if(x==-1) return n%2==0?1:-1;
+        while(pow>0){
+            if((pow & 1)==1){
+                res=res*x;
+            }
 
-        double res=solve(x,n/2);
-
-        if(n%2==0){
-            return res*res;
+            x=x*x;
+            pow>>=1;
         }
 
-        return res*res*x; 
-
-        
-    }
-
-    public double myPow(double x, int n) {
-        if(n==0 || x==1) return 1;
-        // if(x==1) return 1;
-        if(x==-1) return n%2==0?1:-1;
-        
-        int pow=n;
-        return (n>0)?solve(x,pow):1/solve(x,pow);
-
-        // return 
+        return n>0?res:1.0/res;
+        // return res;
     }
 }
