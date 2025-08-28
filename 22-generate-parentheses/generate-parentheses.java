@@ -1,8 +1,8 @@
 class Solution {
     boolean checkValid(String sb) {
         Stack<Character> st = new Stack<>();
-        for (int i=0;i<sb.length();i++) {
-            char ch=sb.charAt(i);
+        for (int i = 0; i < sb.length(); i++) {
+            char ch = sb.charAt(i);
             if (ch == '(')
                 st.push('(');
             else {
@@ -13,11 +13,12 @@ class Solution {
             }
         }
 
-        return st.isEmpty()?true:false;
+        return st.isEmpty() ? true : false;
     }
 
     void solve(StringBuilder sb, int len, List<String> list) {
         if (sb.length() == len) {
+            if (checkValid(sb.toString()) == true)
             list.add(sb.toString());
             return;
         }
@@ -34,10 +35,11 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         solve(sb, 2 * n, list);
 
-        for(String s:list){
-            if(checkValid(s)) result.add(s);
+        for (String s : list) {
+            if (checkValid(s))
+                result.add(s);
         }
-        return result;
-        // return list;
+        // return result;
+        return list;
     }
 }
