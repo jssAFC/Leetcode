@@ -24,7 +24,7 @@ class Solution {
             return;
         }
 
-        if (open < close)
+        if (open < close || open>len)
             return;
 
         solve(sb.append("("), len, list, open + 1, close);
