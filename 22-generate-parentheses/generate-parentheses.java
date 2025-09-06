@@ -16,16 +16,20 @@ class Solution {
         return st.isEmpty() ? true : false;
     }
 
-    void solve(StringBuilder sb, int len, List<String> list) {
+    void solve(StringBuilder sb, int len, List<String> list,int open,int close) {
         if (sb.length() == len) {
-            if (checkValid(sb.toString()) == true)
+            // if (checkValid(sb.toString()) == true)
+            if(open==close)
             list.add(sb.toString());
             return;
         }
 
-        solve(sb.append("("), len, list);
+        if (open < close)
+            return;
+
+        solve(sb.append("("), len, list, open + 1, close);
         sb.setLength(sb.length() - 1);
-        solve(sb.append(")"), len, list);
+        solve(sb.append(")"), len, list, open, close + 1);
         sb.setLength(sb.length() - 1);
     }
 
@@ -33,12 +37,14 @@ class Solution {
         List<String> list = new ArrayList<>();
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        solve(sb, 2 * n, list);
+        int open = 0;
+        int close = 0;
+        solve(sb, 2 * n, list, open, close);
 
-        for (String s : list) {
-            if (checkValid(s))
-                result.add(s);
-        }
+        // for (String s : list) {
+        //     if (checkValid(s))
+        //         result.add(s);
+        // }
         // return result;
         return list;
     }
