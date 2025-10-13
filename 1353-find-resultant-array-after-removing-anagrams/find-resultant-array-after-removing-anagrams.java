@@ -1,15 +1,17 @@
 class Solution {
     boolean isEqual(String word1, String word2) {
-        if (word1.length() != word2.length()) {
-            return false;
+        int []arr1=new int[26];
+        int []arr2=new int[26];
+
+        if(word1.length()!=word2.length()) return false;
+
+        for(int i=0;i<word1.length();i++){
+            arr1[word1.charAt(i)-'a']++;
+            arr2[word2.charAt(i)-'a']++;
         }
-        char[] arr1 = word1.toCharArray();
-        char[] arr2 = word2.toCharArray();
 
-        Arrays.sort(arr1);
-        Arrays.sort(arr2);
 
-        return Arrays.equals(arr1, arr2);
+        return Arrays.equals(arr1,arr2);
     }
 
     public List<String> removeAnagrams(String[] words) {
