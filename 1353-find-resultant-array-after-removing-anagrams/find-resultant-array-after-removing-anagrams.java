@@ -1,36 +1,38 @@
 class Solution {
-
-    int ascii(String word) {
-        int sum = 0;
-
-        for (int i = 0; i < word.length(); i++) {
-            sum += 0 + word.charAt(i);
+    boolean isEqual(String word1, String word2) {
+        if (word1.length() != word2.length()) {
+            return false;
         }
+        char[] arr1 = word1.toCharArray();
+        char[] arr2 = word2.toCharArray();
 
-        return sum;
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+
+        return Arrays.equals(arr1, arr2);
     }
 
     public List<String> removeAnagrams(String[] words) {
-        List<String> list=new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
-        int listLen=0;
+        if (words.length == 0)
+            return list;
 
-        if(words.length==0) return list;
-        list.add(words[listLen]);
+        int index = 0;
+        list.add(words[index]);
 
-        for(int i=1;i<words.length;i++){
+        for (int i = 1; i < words.length; i++) {
+            String word1 = words[i];
+            String word2 = list.get(index);
 
-            int word1=ascii(words[i]);
-            int word2=ascii(list.get(listLen));
-
-            if(word1==word2) continue;
-            else{
-                list.add(words[i]);
-                listLen++;
+            if (isEqual(word1, word2) == false) {
+                list.add(word1);
+                index++;
             }
+
         }
 
-        if(words[0].equals("truqjvrb")) list.add(1,"vsuokmjq");
         return list;
+
     }
 }
