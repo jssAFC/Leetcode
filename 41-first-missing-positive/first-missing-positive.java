@@ -1,21 +1,28 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        Map<Integer,Integer> map=new HashMap<>();
+        int n=nums.length;
 
-        for(int i:nums){
-            map.put(i,map.getOrDefault(i,0)+1);
-        }
-
-        int num=1;
-
-        while(true){
-            if(map.getOrDefault(num,0)>0){
-                num++;
+        for(int i=0;i<n;i++){
+            if(nums[i]<=0 || nums[i]>n){
+                nums[i]=n+1;
             }
-            else
-            break;
         }
-        return num;
 
+        for(int i=0;i<n;i++){
+            int num=Math.abs(nums[i]);
+
+            if(num>n) continue;
+
+            if(nums[num-1]>0){
+                nums[num-1]=-1*nums[num-1];
+            }
+        }
+
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>0) return i+1;
+        }
+
+
+        return n+1;
     }
 }
