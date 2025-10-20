@@ -3,7 +3,7 @@ class Solution {
         int init_val=0;
 
         for(String s:operations){
-            if(s.contains("++")) init_val++;
+            if(s.indexOf('+')!=-1) init_val++;
             else init_val--;
         }
 
