@@ -1,8 +1,11 @@
 class Solution {
     public String sort(String s) {
-        char[] arr = s.toCharArray();
-        Arrays.sort(arr);
-        return new String(arr);
+        int count[]=new int[26];
+        for(char c:s.toCharArray()){
+            count[c-'a']++;
+        }
+        
+        return Arrays.toString(count);
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
@@ -21,11 +24,7 @@ class Solution {
             }
         }
 
-        List<List<String>> result=new ArrayList<>();
-        for(List<String> group:map.values()){
-            result.add(group);
-        }
-
-        return result;
+        // List<List<String>> result=new ArrayList<>();
+        return new ArrayList<>(map.values());
     }
 }
