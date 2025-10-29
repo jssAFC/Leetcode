@@ -1,12 +1,9 @@
 class Solution {
     public int smallestNumber(int n) {
-        while(true){
-            String binary=Integer.toBinaryString(n);
-            boolean flag=true;
-            if(binary.indexOf('0')==-1) break;
-            n++;
+        int x=1;
+        while(x<n){
+            x=x*2+1;
         }
-
-        return n;
+        return x;
     }
 }
