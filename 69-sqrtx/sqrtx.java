@@ -3,9 +3,8 @@ class Solution {
         int i;
         int res=1;
         if(x==0 || x==1) return x;
-        for( i=1;i<=x;i++){
-            if((long)i*i<=(long)x) res=i;
-            else break;
+        for(i=1;(long)i*i<=(long)x;i++){
+            res=i;
         }
 
         return res;
