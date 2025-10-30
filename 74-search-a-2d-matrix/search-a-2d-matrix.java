@@ -8,7 +8,15 @@ class Solution {
             int mid=i+(j-i)/2;
 
             if(target<=matrix[mid][sublen] && target>=matrix[mid][0]){
-                for(int num:matrix[mid]) if(num==target) return true;
+                int start=0,end=sublen;
+                while(start<=end){
+                    int mid2=start+(end-start)/2;
+                    if(matrix[mid][mid2]==target) return true;
+                    
+                    if(matrix[mid][mid2]<target) start=mid2+1;
+                    else end=mid2-1;
+                }
+
                 return false;
             }
 
