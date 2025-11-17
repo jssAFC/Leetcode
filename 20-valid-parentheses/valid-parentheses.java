@@ -4,23 +4,19 @@ class Solution {
         Stack<Character> stack=new Stack<>();
 
         for(char ch:s.toCharArray()){
-            if(ch=='(' || ch=='{' || ch=='['){
-                stack.push(ch);
-            }
-            else{
-                if(stack.isEmpty()) return false;
-                if(ch==')'){
-                    if(stack.peek()!='(') return false;
-                    stack.pop();
-                }
-                else if(ch=='}'){
-                    if(stack.peek()!='{') return false;
-                    stack.pop();
-                }
-                else{
-                    if(stack.peek()!='[') return false;
-                    stack.pop();
-                }
+            switch(ch){
+                case '(':
+                    stack.push(')');
+                    break;
+                case '{':
+                    stack.push('}');
+
+                    break;
+                case '[':
+                    stack.push(']');
+                    break;
+                default:
+                    if(stack.isEmpty() || stack.pop()!=ch) return false;
             }
         }
 
