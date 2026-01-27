@@ -1,17 +1,37 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int j=0;
+        int start=-1,end=-1;
         int []res=new int[2];
         Arrays.fill(res,-1);
 
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]==target && j==0){
-                res[j++]=i;
-                res[j]=i;
+        int i=0,j=nums.length-1;
+
+        while(i<=j){
+            int mid=(j-i)/2+i;
+            if(nums[mid]==target){
+                start=mid;
+                end=mid;
             }
-            else if(nums[i]==target) res[j]=i;
+            
+            if(nums[mid]>=target) j=mid-1;
+            else i=mid+1;
         }
 
-        return res;
+        i=0;
+        j=nums.length-1;
+        
+        while(i<=j){
+            int mid=(j-i)/2+i;
+            if(nums[mid]==target){
+                end=mid;
+                System.out.println(mid);
+            }
+            
+            if(nums[mid]>target) j=mid-1;
+            else i=mid+1;
+        }
+        
+
+        return new int[]{start,end};
     }
 }
