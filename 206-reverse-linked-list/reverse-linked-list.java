@@ -12,13 +12,17 @@ class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode prev=null,temp=head;
 
-        while(temp!=null){
-            ListNode curr=temp.next;
-            temp.next=prev;
-            prev=temp;
-            temp=curr;
-        }
+        return solve(temp,prev);
 
-        return prev;
+    
+    }
+
+    public ListNode solve(ListNode temp,ListNode prev){
+        if(temp==null) return prev;
+        ListNode next=temp.next;
+        temp.next=prev;
+        prev=temp;
+        System.out.println(temp.val);
+        return solve(next,prev);
     }
 }
