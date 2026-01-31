@@ -12,7 +12,7 @@ class Solution {
         }
 
         
-        if(left<n){
+        if(left<=n){
             solve(list,s+"(",left+1,right,n);
         }
         if(right<left){
