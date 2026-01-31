@@ -1,26 +1,22 @@
 class Solution {
-    public void solve(List<String> result, StringBuilder sb, int open, int close, int len) {
-        if (open > len / 2 || close > open)
-            return;
-        if (sb.length() == len) {
-            result.add(sb.toString());
+    public List<String> generateParenthesis(int n) {
+        List<String> list=new ArrayList<>();
+        solve(list,"",0,0,n);
+        return list;
+    }
+
+    public void solve(List<String> list,String s,int left,int right,int n){
+        if(s.length()==n*2 && left==right){
+            list.add(s);
             return;
         }
 
-        solve(result, sb.append("("), open + 1, close, len);
-        sb.setLength(sb.length() - 1);
-        solve(result, sb.append(")"), open, close + 1, len);
-        sb.setLength(sb.length() - 1);
-
-    }
-
-    public List<String> generateParenthesis(int n) {
-        int open = 0, close = 0;
-        List<String> result = new ArrayList();
-        StringBuilder sb = new StringBuilder();
-
-        solve(result, sb, open, close, 2 * n);
-
-        return result;
+        
+        if(left<n){
+            solve(list,s+"(",left+1,right,n);
+        }
+        if(right<left){
+            solve(list,s+")",left,right+1,n);
+        }
     }
 }
