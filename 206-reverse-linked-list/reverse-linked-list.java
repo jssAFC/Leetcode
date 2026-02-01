@@ -12,17 +12,20 @@ class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode prev=null,temp=head;
 
-        return solve(temp,prev);
+        return solve(head);
 
-    
     }
 
-    public ListNode solve(ListNode temp,ListNode prev){
-        if(temp==null) return prev;
-        ListNode next=temp.next;
-        temp.next=prev;
-        prev=temp;
-        System.out.println(temp.val);
-        return solve(next,prev);
+    public ListNode solve(ListNode head){
+        
+        if(head==null || head.next==null){
+            return head;
+        }
+
+        ListNode newHead=solve(head.next);
+        head.next.next=head;
+        head.next=null;
+
+        return newHead;
     }
 }
