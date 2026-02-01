@@ -1,48 +1,46 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        int n=heights.length;
-        int nsl[]=new int[n];
-        int nsr[]=new int[n];
+        int n = heights.length;
 
-        Stack<Integer> st=new Stack<>();
+        int left[] = new int[n];
+        int right[] = new int[n];
 
-        for(int i=0;i<n;i++){
-            int num=heights[i];
+        Stack<int[]> st = new Stack<>();
 
-            while(!st.isEmpty() && num<=heights[st.peek()]){
+        for (int i = 0; i < n; i++) {
+            int num = heights[i];
+
+            while (!st.isEmpty() && num <= st.peek()[0])
                 st.pop();
-            }
+            if (st.isEmpty())
+                left[i] = -1;
+            else
+                left[i] = st.peek()[1];
 
-            nsl[i]=st.isEmpty()?-1:st.peek();
-            st.push(i); 
+            st.push(new int[] { num, i });
         }
 
         st.clear();
 
-        for(int i=n-1;i>=0;i--){
-            int num=heights[i];
-            while(!st.isEmpty() && num<=heights[st.peek()]){
+        for (int i = n - 1; i >= 0; i--) {
+            int num = heights[i];
+
+            while (!st.isEmpty() && num <= st.peek()[0])
                 st.pop();
-            }
+            if (st.isEmpty())
+                right[i] = n;
+            else
+                right[i] = st.peek()[1];
 
-            nsr[i]=st.isEmpty()?n:st.peek();
-            st.push(i);
+            st.push(new int[] { num, i });
         }
 
-
-        // System.out.println(Arrays.toString(nsl));
-        // System.out.println(Arrays.toString(nsr));
-        int max=0;
-        // return 1;
-        
-        for(int i=0;i<n;i++){
-            int width=nsr[i]-nsl[i]-1;
-            System.out.println(heights[i]*width);
-            max=Math.max(max,heights[i]*width);
+        int maxArea = 0;
+        for (int i = 0; i < n; i++) {
+            int width = right[i] - left[i] - 1;
+            maxArea = Math.max(maxArea, width * heights[i]);
         }
 
-        return max;
-
-
+        return maxArea;
     }
 }
