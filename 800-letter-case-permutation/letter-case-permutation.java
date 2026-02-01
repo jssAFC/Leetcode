@@ -1,25 +1,27 @@
 class Solution {
     public List<String> letterCasePermutation(String s) {
-        List<String> list = new ArrayList<>();
+        List<String> list=new ArrayList<>();
 
-        solve(s, list, 0, "");
+        solve(list,s,0,"");
         return list;
     }
 
-    public void solve(String s, List<String> list, int i, String str) {
-        if (str.length() == s.length()) {
-            list.add(str);
+    public void solve(List<String> list,String s,int i,String res){
+        if(res.length()==s.length()){
+            list.add(res);
             return;
         }
 
-        char ch = s.charAt(i);
-        if (!Character.isDigit(ch)) {
-            char toggled = Character.isLowerCase(ch) ? Character.toUpperCase(ch) : Character.toLowerCase(ch);
+        if(i>=s.length()) return;
 
-            solve(s, list, i + 1, str + toggled);
+        char ch=s.charAt(i);
+        solve(list,s,i+1,res+ch);
+
+        if(!Character.isDigit(ch)){
+            char n=Character.isUpperCase(ch)?Character.toLowerCase(ch):Character.toUpperCase(ch);
+            solve(list,s,i+1,res+n);
         }
 
-        solve(s, list, i + 1, str + ch);
 
     }
 }
