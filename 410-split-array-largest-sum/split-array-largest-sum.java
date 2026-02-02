@@ -1,32 +1,44 @@
 class Solution {
     public int splitArray(int[] nums, int k) {
-        int l = Arrays.stream(nums).max().getAsInt();
-        int r = Arrays.stream(nums).sum();
+        int n=nums.length;
+        int lo=0;
+        int hi=0,min=Integer.MAX_VALUE;
+        for(int i:nums){
+            hi+=i;
+            lo=Math.max(lo,i);
+        }
 
-        int result = r;
+        while(lo<=hi){
+            int maxSum=(hi-lo)/2+lo;
 
-        while (l < r) {
-            int mid = (r - l) / 2 + l;
-            int sum = 0, limit = 0;
+            int maxSubArrays=solve(nums,maxSum);
 
-            for (int i : nums) {
-                if (sum + i > mid) {
-                    limit++;
-                    sum = i;
-                } else {
-                    sum += i;
-                }
+            if(maxSubArrays>k){
+                lo=maxSum+1;
             }
-
-            limit++;
-            if (limit <= k) {
-                result = mid;
-                r = mid;
-            } else {
-                l = mid + 1;
+            else{
+                min=Math.min(min,maxSum);
+                hi=maxSum-1;
             }
         }
 
-        return result;
+        return min;
+    }
+
+    public int solve(int[] nums, int maxSum){
+        int count=0;
+        int sum=0;
+
+        for(int i:nums){
+            if(sum+i>maxSum){
+                count++;
+                sum=i;
+            }
+            else{
+                sum+=i;
+            }
+        }
+        count++;
+        return count;
     }
 }
