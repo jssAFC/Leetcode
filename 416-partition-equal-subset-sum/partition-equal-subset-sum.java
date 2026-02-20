@@ -3,6 +3,7 @@ class Solution {
         int n=nums.length,sum=0;
         for(int i:nums) sum+=i;
         if(sum%2!=0) return false;
+        sum/=2;
 
         boolean[][] dp=new boolean[n+1][sum+1];
 
@@ -19,7 +20,7 @@ class Solution {
             }
         }
 
-        return dp[n][sum/2];
+        return dp[n][sum];
     }
 
     
