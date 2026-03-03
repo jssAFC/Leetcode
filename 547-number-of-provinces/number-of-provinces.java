@@ -14,22 +14,29 @@ class Solution {
 
         boolean visited[]=new boolean[v];
         int count=0;
+        Queue<Integer> q=new LinkedList<>();
 
         for(int i=0;i<v;i++){
             if(!visited[i]){
                 count++;
-                dfs(i,adj,visited);
+                visited[i]=true;
+                q.offer(i);
+                bfs(i,adj,visited,q);
             }
         }
         
         return count;
     }
 
-    public void dfs(int u,List<List<Integer>> adj,boolean[] visited){
-        visited[u]=true;
-
-        for(int v:adj.get(u)){
-            if(!visited[v]) dfs(v,adj,visited);
+    public void bfs(int u,List<List<Integer>> adj,boolean[] visited,Queue<Integer> q){
+        while(!q.isEmpty()){
+            int top=q.poll();
+            for(int v:adj.get(top)){
+                if(!visited[v]){
+                visited[v]=true;
+                q.offer(v);
+                }
+            }
         }
     }
 }
