@@ -5,23 +5,35 @@ class Solution {
         V = graph.length;
         int colors[] = new int[V];
         Arrays.fill(colors, -1);
-        int color = 0;
+        // int color = 0;
+
+        Queue<Integer> q=new LinkedList<>();
 
         for(int i=0;i<V;i++){
-            if(colors[i]==-1 && dfs(graph,colors,i,-1,1-color)==false) return false;
+            if(colors[i]==-1 && bfs(q,colors,graph,i)==false) return false;
         }
 
         return true;
     }
 
-    public boolean dfs(int[][] graph,int[] colors,int u, int parent,int color){
-        colors[u]=color;
-
-        for(int i:graph[u]){
-            if(colors[i]==-1 && dfs(graph,colors,i,u,1-color)==false) return false;
-            else if(i!=parent && colors[i]==colors[u]) return false;
+    public boolean bfs(Queue<Integer> q, int[] colors,int [][]graph,int i){
+        q.offer(i);
+        colors[i]=0;
+         while(!q.isEmpty()){
+            int top=q.poll();
+            int color=colors[top];
+            for(int u:graph[top]){
+                if(colors[u]==-1){
+                    colors[u]=1-color;
+                    q.offer(u);
+                }
+                else{
+                    if(colors[u]==color) return false;
+                }
+            }
         }
-
         return true;
     }
+
+    
 }
