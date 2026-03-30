@@ -1,30 +1,15 @@
 class Solution {
     public boolean checkStrings(String s1, String s2) {
-        // int[] even1=new int[26];
-        // int[] odd1=new int[26];
-        // int[] even2=new int[26];
-        // int[] odd2=new int[26];
-        ArrayList<Character> even1=new ArrayList<>();
-        ArrayList<Character> odd1=new ArrayList<>();
-        ArrayList<Character> even2=new ArrayList<>();
-        ArrayList<Character> odd2=new ArrayList<>();
-
-        for(int i=0;i<s1.length();i++){
-            if(i%2==0){
-                even1.add(s1.charAt(i));
-                even2.add(s2.charAt(i));
-            }
-            else{
-                odd1.add(s1.charAt(i));
-                odd2.add(s2.charAt(i));
-            }
+        int freq[][]=new int[2][26];
+        int n=s1.length();
+        for(int i=0;i<n;i++){
+            freq[i%2][s1.charAt(i)-'a']++;
+            freq[i%2][s2.charAt(i)-'a']--;
         }
 
-        Collections.sort(even1);
-        Collections.sort(odd1);
-        Collections.sort(even2);
-        Collections.sort(odd2);
-
-        return even1.equals(even2) && odd1.equals(odd2);
+        for(int i=0;i<26;i++){
+            if(freq[0][i]!=0 || freq[1][i]!=0) return false;
+        }
+        return true;
     }
 }
