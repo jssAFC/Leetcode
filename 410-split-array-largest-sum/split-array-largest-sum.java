@@ -1,44 +1,39 @@
 class Solution {
     public int splitArray(int[] nums, int k) {
+        // Arrays.sort(nums);
         int n=nums.length;
-        int lo=0;
-        int hi=0,min=Integer.MAX_VALUE;
-        for(int i:nums){
-            hi+=i;
-            lo=Math.max(lo,i);
-        }
+        int lo=0,hi=0;
+        int result=-1;
+
+        for(int num:nums){
+            lo=Math.max(lo,num);
+            hi+=num;
+        } 
 
         while(lo<=hi){
-            int maxSum=(hi-lo)/2+lo;
-
-            int maxSubArrays=solve(nums,maxSum);
-
-            if(maxSubArrays>k){
-                lo=maxSum+1;
-            }
-            else{
-                min=Math.min(min,maxSum);
-                hi=maxSum-1;
-            }
-        }
-
-        return min;
-    }
-
-    public int solve(int[] nums, int maxSum){
-        int count=0;
-        int sum=0;
-
-        for(int i:nums){
-            if(sum+i>maxSum){
-                count++;
-                sum=i;
-            }
-            else{
+            int mid=(hi-lo)/2+lo;
+            int count=0;
+            int sum=0;
+            for(int i:nums){
                 sum+=i;
+                if(sum>mid){
+                    count++;
+                    sum=i;
+                }
             }
-        }
-        count++;
-        return count;
+
+            count+=1;
+
+            if(count<=k){
+                result=mid;
+                hi=mid-1;
+            }
+            else{
+                lo=mid+1;
+            }
+
+        } 
+
+        return result;
     }
 }
