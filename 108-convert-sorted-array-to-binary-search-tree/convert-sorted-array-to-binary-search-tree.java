@@ -15,11 +15,15 @@
  */
 class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
-        return solve(nums,0,nums.length-1);
+        if(nums.length==0) return null;
+        int l=0,r=nums.length-1;
+        
+        return solve(nums,l,r);
     }
 
     public TreeNode solve(int[] nums,int l,int r){
         if(l>r) return null;
+
         int mid=(r-l)/2+l;
         TreeNode root=new TreeNode(nums[mid]);
 
@@ -27,6 +31,7 @@ class Solution {
         root.right=solve(nums,mid+1,r);
 
         return root;
-        
     }
+
+
 }
