@@ -1,14 +1,17 @@
 class Solution {
+    int[] dp;
     public int rob(int[] nums) {
-        int prev1=0,prev2=0;
+        if(nums.length<2) return nums[0];
 
-        for(int i=0;i<nums.length;i++){
-            int curr=prev2+nums[i];
-            curr=Math.max(curr,prev1);
-            prev2=prev1;
-            prev1=curr;
-        }
+        dp=new int[nums.length];
+        Arrays.fill(dp,-1);
 
-        return prev1;
+        return func(0,nums);
+    }
+
+    public int func(int i,int[]nums){
+        if(i>=nums.length) return 0;
+        if(dp[i]!=-1) return dp[i];
+        return dp[i]=Math.max(nums[i] + func(i+2,nums),func(i+1,nums));
     }
 }
