@@ -1,27 +1,25 @@
 class Solution {
+    int sum;
+    Boolean[][] dp;
+
     public boolean canPartition(int[] nums) {
-        int n=nums.length,sum=0;
+        sum=0;
         for(int i:nums) sum+=i;
         if(sum%2!=0) return false;
-        sum/=2;
 
-        boolean[][] dp=new boolean[n+1][sum+1];
+        dp=new Boolean[nums.length][sum+1];
 
-        for(int i=0;i<=n;i++) dp[i][0]=true;
-        for(int i=1;i<=sum;i++) dp[0][i]=false;
-
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=sum;j++){
-                dp[i][j]=dp[i-1][j];
-
-                if(j>=nums[i-1]){
-                    dp[i][j]=(dp[i][j] || dp[i-1][j-nums[i-1]]);
-                }
-            }
-        }
-
-        return dp[n][sum];
+        return func(0,0,nums);
     }
 
-    
+    public boolean func(int i,int curr,int[] nums){
+        if(i>=nums.length || curr>sum/2) return false;
+
+        if(dp[i][curr]!=null) return dp[i][curr];
+        if(curr==sum/2) return true;
+        // if(curr>sum/2) return false;
+
+        return dp[i][curr]=func(i+1,curr+nums[i],nums) || func(i+1,curr,nums);
+
+    }
 }
